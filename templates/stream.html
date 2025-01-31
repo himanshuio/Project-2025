@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ detection_type }} - Live Feed</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <style>
+        /* General Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+/* Header */
+h2 {
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Video Feed Styling */
+img {
+    margin-top: 20px;
+    border-radius: 5px;
+    border: 3px solid black;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Go Back Link */
+a {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+a:hover {
+    background-color: #0056b3;
+    text-decoration: none;
+}
+    </style>
+</head>
+<body>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+
+    <h2>{{ detection_type }} - Live Video Feed</h2>
+    <img src="/video_feed" width="640" height="480" style="border: 2px solid black;">
+    <br><br>
+    <a href="/" onclick="setTimeout(() => location.reload(), 500);">Go Back</a>
+
+</body>
+</html>

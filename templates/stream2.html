@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ detection_type }} - Live Feed</title>
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        /* Video Feed Styling */
+        img {
+            margin-top: 20px;
+            border-radius: 5px;
+            border: 2px solid black;
+        }
+
+        /* Go Back Link */
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>{{ detection_type }} - Live Video Feed</h2>
+    <img src="/video_feed2" width="640" height="480">
+    <br><br>
+    <a href="/" onclick="setTimeout(() => location.reload(), 500);">Go Back</a>
+
+</body>
+</html>
