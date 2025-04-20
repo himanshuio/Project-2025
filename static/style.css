@@ -1,0 +1,129 @@
+/* Google Fonts Integration */
+@import url('https://fonts.googleapis.com/css2?family=Boldonse&family=Lobster&display=swap');
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    color: #333;
+    text-align: center;
+}
+
+/* Boldonse Font */
+.lobster-regular {
+    font-family: "Lobster", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+/* Header Styling */
+h1 {
+    font-family: "Lobster", sans-serif;
+    color: #28a745;
+    margin-top: 20px;
+    font-size: 60px;
+    font-weight: bold;
+}
+
+/* Form Styling */
+form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    text-align: left;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+    font-size: 16px;
+    display: block;
+    margin-top: 15px;
+}
+
+/* Input and Select Styling */
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Button Styling */
+button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100%;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Video Feed Styling */
+img {
+    margin-top: 30px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Go Back Link Styling */
+a {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+a:hover {
+    background-color: #0056b3;
+}
+
+/* Threshold Field Styling */
+#threshold_field {
+    display: none;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 20px;
+    }
+    
+    form {
+        width: 90%;
+        padding: 25px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+    
+    img {
+        max-width: 100%;
+    }
+}
