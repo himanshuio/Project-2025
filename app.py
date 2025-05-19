@@ -6,7 +6,7 @@ import supervision as sv
 import os
 from datetime import datetime, timedelta
 from trigger import trig, set_snapshot_folder
-
+from collections import deque
 
 app = Flask(__name__, static_folder='static')
 
@@ -91,14 +91,22 @@ def generate_frames(video_path, model_path, threshold):
 
     cap.release()
 
+
 def violence(video_path, model_path):
     model = YOLO(model_path)
     cap = cv2.VideoCapture(video_path)
 
     if not cap.isOpened():
-        raise RuntimeError("Error opening video file.")
+        raise RuntimeError('Error opening video file.')
 
-    last_trigger_time = datetime.min  # Initialize with a time far in the past
+    # Time-Window Logic
+    time_window = 3  # seconds
+    frame_threshold = 5
+    detection_times = deque(maxlen=frame_threshold)
+    last_trigger_time = datetime.min
+    frame_counter = 0
+    time_counter = 0
+    restarting_flag = False
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -113,19 +121,44 @@ def violence(video_path, model_path):
 
         if violence_detected:
             now = datetime.now()
-            if now - last_trigger_time > timedelta(seconds=30):
-                trig(annotated_frame, trigger_type="violence")
-                last_trigger_time = now
+            
+            # New Logic: If time window exceeded without completing 5 frames
+            if detection_times and (now - detection_times[0]).total_seconds() > time_window:
+                print("Restarting...")
+                detection_times.clear()
+                frame_counter = 0
+                time_counter = 0
+                restarting_flag = True
 
-            cv2.putText(annotated_frame, "VIOLENCE DETECTED", (50, 50),
+            detection_times.append(now)
+            frame_counter += 1
+            time_counter = (now - detection_times[0]).total_seconds()
+
+        # Display Frame Number and Time Counter
+        cv2.putText(annotated_frame, f'Frame: {frame_counter}', (50, 50),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 0), 2)
+        cv2.putText(annotated_frame, f'Time: {int(time_counter)}s', (50, 90),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 0), 2)
+
+        # Display "Restarting..." on the screen if the window restarts
+        if restarting_flag:
+            cv2.putText(annotated_frame, "Restarting...", (50, 130),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            restarting_flag = False  # Reset the flag
+
+        # Check if 5 detections happened within the time window
+        if len(detection_times) == frame_threshold and time_counter <= time_window:
+            cv2.putText(annotated_frame, 'VIOLENCE DETECTED', (50, 130),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            detection_times.clear()
+            frame_counter = 0
+            time_counter = 0
 
         _, buffer = cv2.imencode('.jpg', annotated_frame)
         frame_bytes = buffer.tobytes()
         yield (b'--frame\r\nContent-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
 
     cap.release()
-
 @app.route('/video_feed')
 def video_feed():
     global video_path, model_path, threshold
