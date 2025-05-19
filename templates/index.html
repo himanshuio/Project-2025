@@ -8,23 +8,28 @@
         function toggleThreshold() {
             var detectionType = document.getElementById("detection_type").value;
             var thresholdField = document.getElementById("threshold_field");
+            
+            // Display threshold only for "crowd"
             if (detectionType === "crowd") {
                 thresholdField.style.display = "block";
             } else {
                 thresholdField.style.display = "none";
             }
         }
+        
+        // Initial check to set the display on page load
+        window.onload = toggleThreshold;
     </script>
     <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 <body>
-<br>
+    <br>
     <h1>Detect.</h1>
     <form action="/" id="detectionForm" method="post">
         <label for="detection_type">Detection Type:</label>
         <select id="detection_type" name="detection_type" onchange="toggleThreshold()" >
-            <option name="crowd" value="crowd">Crowd Detection</option>
-            <option name="violence" value="violence">Violence Detection</option>
+            <option value="crowd">Crowd Detection</option>
+            <option value="violence">Violence Detection</option>
         </select>
         <br><br>
 
@@ -34,7 +39,8 @@
         <label for="model_path">Model Path:</label>
         <input type="text" id="model_path" name="model_path" required><br><br>
 
-        <div id="threshold_field">
+        <!-- Threshold field is hidden initially and only shown for 'crowd' -->
+        <div id="threshold_field" style="display: none;">
             <label for="threshold">Threshold:</label>
             <input type="number" id="threshold" name="threshold" min="0" value="1"><br><br>
         </div>
